@@ -61,7 +61,7 @@ const Signup = () => {
         timer: 3000,
       });
       setTimeout(() => {
-        navigate("/");
+        navigate("/login");
       }, 3000);
     } else {
       setErrorMsg(data.data.error);
