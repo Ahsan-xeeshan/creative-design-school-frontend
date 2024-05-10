@@ -3,7 +3,6 @@
 import axios from "axios";
 import { useState } from "react";
 import { useSelector } from "react-redux";
-import Swal from "sweetalert2";
 
 const AddClass = () => {
   const data = useSelector((state) => state.userInfo.value);
@@ -19,7 +18,7 @@ const AddClass = () => {
 
   const handleCreateClass = async () => {
     try {
-      await axios.post(
+      const response = await axios.post(
         `https://creative-school-design.onrender.com/api/v1/classes/createclass`,
         {
           instructorname: instructorname,
@@ -32,23 +31,29 @@ const AddClass = () => {
           quantity: quantity,
         }
       );
-      // Assuming data contains a success message or relevant data
-      Swal.fire({
-        title: "Success!",
-        text: "Class created successfully!",
-        icon: "success",
-        confirmButtonText: false,
-        timer: 5000,
-      });
+      // Check if the request was successful
+      if (response.status === 200) {
+        Swal.fire({
+          icon: "success",
+          title: "Class created successfully!",
+          showConfirmButton: false,
+          timer: 1500, // Close alert after 1.5 seconds
+        });
+      } else {
+        Swal.fire({
+          icon: "error",
+          title: "Oops...",
+          text: "Something went wrong!",
+        });
+      }
     } catch (error) {
-      // Handle error response from the server
+      // Handle errors
+      console.error("Error creating class:", error);
       Swal.fire({
-        title: "Error!",
-        text: "Failed to create class. Please try again later.",
         icon: "error",
-        confirmButtonText: "OK",
+        title: "Oops...",
+        text: "Something went wrong!",
       });
-      console.error("Error:", error);
     }
   };
 
