@@ -1,10 +1,13 @@
+/* eslint-disable no-undef */
 /* eslint-disable no-unused-vars */
 import axios from "axios";
+import "dotenv/config";
 import { useState } from "react";
 import { useSelector } from "react-redux";
 import Swal from "sweetalert2";
 
 const AddClass = () => {
+  const api = process.env.REACT_APP_BASE_URL;
   const data = useSelector((state) => state.userInfo.value);
 
   const instructorname = data.username;
@@ -19,19 +22,16 @@ const AddClass = () => {
 
   const handleCreateClass = async () => {
     try {
-      let data = await axios.post(
-        "http://localhost:8080/api/v1/classes/createclass",
-        {
-          instructorname: instructorname,
-          email: email,
-          instructorid: id,
-          image: image,
-          classname: classname,
-          price: price,
-          category: category,
-          quantity: quantity,
-        }
-      );
+      let data = await axios.post(`${api}/classes/createclass`, {
+        instructorname: instructorname,
+        email: email,
+        instructorid: id,
+        image: image,
+        classname: classname,
+        price: price,
+        category: category,
+        quantity: quantity,
+      });
       // Assuming data contains a success message or relevant data
       Swal.fire({
         title: "Success!",

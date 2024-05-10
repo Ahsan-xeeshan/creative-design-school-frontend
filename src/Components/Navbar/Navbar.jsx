@@ -1,6 +1,8 @@
+/* eslint-disable no-undef */
 /* eslint-disable react/jsx-key */
 import { Transition } from "@headlessui/react";
 import axios from "axios";
+import "dotenv/config";
 import { Button } from "flowbite-react";
 import { useState } from "react";
 import { BsInfoCircle } from "react-icons/bs";
@@ -12,8 +14,10 @@ import { VscSignOut } from "react-icons/vsc";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
+
 import { loggedOutUser } from "../../slices/logoutSlice";
 const Navbar = () => {
+  const api = process.env.REACT_APP_BASE_URL;
   const [isOpen, setIsOpen] = useState(false);
   const data = useSelector((state) => state.userInfo.value);
   const dispatch = useDispatch();
@@ -77,7 +81,7 @@ const Navbar = () => {
       });
 
       if (result.isConfirmed) {
-        await axios.post("http://localhost:8080/api/v1/authentication/logout");
+        await axios.post(`${api}/authentication/logout`);
         localStorage.clear();
         dispatch(loggedOutUser());
         location.reload(true);

@@ -1,4 +1,7 @@
+/* eslint-disable no-undef */
+/* eslint-disable no-unused-vars */
 import axios from "axios";
+import "dotenv/config";
 import { useState } from "react";
 import { FaGoogle } from "react-icons/fa";
 import { useDispatch } from "react-redux";
@@ -7,8 +10,8 @@ import Swal from "sweetalert2";
 import Container from "../Components/Layouts/Container";
 import login from "../assets/login.jpg";
 import { loggedInUser } from "../slices/userSlices";
-
 const LogIn = () => {
+  const api = process.env.REACT_APP_BASE_URL;
   const [loginData, setLoginData] = useState({
     email: "",
     password: "",
@@ -26,13 +29,10 @@ const LogIn = () => {
   };
 
   const handleLogin = async () => {
-    const data = await axios.post(
-      "http://localhost:8080/api/v1/authentication/login",
-      {
-        email: loginData.email,
-        password: loginData.password,
-      }
-    );
+    const data = await axios.post(`${api}/authentication/login`, {
+      email: loginData.email,
+      password: loginData.password,
+    });
     console.log(data);
     if (data.data.success) {
       setSuccessMsg(data.data.success);

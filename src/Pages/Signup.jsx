@@ -1,13 +1,15 @@
+/* eslint-disable no-undef */
 /* eslint-disable no-unused-vars */
 import axios from "axios";
+import "dotenv/config";
 import { useState } from "react";
 import { FaGoogle } from "react-icons/fa";
 import { Link, useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
 import Container from "../Components/Layouts/Container";
 import register from "../assets/register.jpg";
-
 const Signup = () => {
+  const api = process.env.REACT_APP_BASE_URL;
   const [checked, setChecked] = useState(false);
   const [showValues, setShowValues] = useState(false);
   const [successMsg, setSuccessMsg] = useState(false);
@@ -37,16 +39,13 @@ const Signup = () => {
   };
   console.log(registrationData);
   const handleSignUp = async () => {
-    const data = await axios.post(
-      "http://localhost:8080/api/v1/authentication/registration",
-      {
-        username: registrationData.username,
-        image: registrationData.image,
-        email: registrationData.email,
-        password: registrationData.password,
-        confirmpassword: registrationData.confirmpassword,
-      }
-    );
+    const data = await axios.post(`${api}/v1/authentication/registration`, {
+      username: registrationData.username,
+      image: registrationData.image,
+      email: registrationData.email,
+      password: registrationData.password,
+      confirmpassword: registrationData.confirmpassword,
+    });
     console.log(data);
     if (data.data.success) {
       setSuccessMsg(data.data.success);

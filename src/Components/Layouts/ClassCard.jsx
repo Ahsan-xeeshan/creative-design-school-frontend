@@ -1,85 +1,17 @@
+/* eslint-disable no-undef */
 /* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable react/jsx-key */
 import axios from "axios";
 import { useEffect, useState } from "react";
 import Container from "./Container";
-
-// const classData = [
-//   {
-//     classname: "jakey chaine",
-//     price: "800",
-//     seat: "20",
-//     enrolled: "3",
-//     image: "./cardpic1.jpg",
-//     category: "Essential",
-//     instructorname: "test",
-//     email: "test@gmail.com",
-//     feedback: "test",
-//   },
-//   {
-//     classname: "jakey chaine",
-//     price: "800",
-//     seat: "20",
-//     enrolled: "3",
-//     image: "./cardpic1.jpg",
-//     category: "Essential",
-//     instructorname: "test",
-//     email: "test@gmail.com",
-//     feedback: "test",
-//   },
-//   {
-//     classname: "jakey chaine",
-//     price: "800",
-//     seat: "20",
-//     enrolled: "3",
-//     image: "./cardpic1.jpg",
-//     category: "Essential",
-//     instructorname: "test",
-//     email: "test@gmail.com",
-//     feedback: "test",
-//   },
-//   {
-//     classname: "jakey chaine",
-//     price: "800",
-//     seat: "20",
-//     enrolled: "3",
-//     image: "./cardpic1.jpg",
-//     category: "Essential",
-//     instructorname: "test",
-//     email: "test@gmail.com",
-//     feedback: "test",
-//   },
-//   {
-//     classname: "jakey chaine",
-//     price: "800",
-//     seat: "20",
-//     enrolled: "3",
-//     image: "./cardpic1.jpg",
-//     category: "Essential",
-//     instructorname: "test",
-//     email: "test@gmail.com",
-//     feedback: "test",
-//   },
-//   {
-//     classname: "jakey chaine",
-//     price: "800",
-//     seat: "20",
-//     enrolled: "3",
-//     image: "./cardpic1.jpg",
-//     category: "Essential",
-//     instructorname: "test",
-//     email: "test@gmail.com",
-//     feedback: "test",
-//   },
-// ];
+import "dotenv/config";
 
 const ClassCard = () => {
+  const api = process.env.REACT_APP_BASE_URL;
   const [classData, setClassData] = useState([]);
   useEffect(() => {
     const classDetails = async () => {
-      const data = await axios.get(
-        "http://localhost:8080/api/v1/classes/allclasses"
-      );
+      const data = await axios.get(`${api}/classes/allclasses`);
       setClassData(data.data);
     };
     classDetails();
