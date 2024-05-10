@@ -1,6 +1,5 @@
 /* eslint-disable no-undef */
 import axios from "axios";
-
 import { useEffect, useState } from "react";
 import Swal from "sweetalert2";
 

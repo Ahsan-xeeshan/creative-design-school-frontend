@@ -1,14 +1,12 @@
 /* eslint-disable no-undef */
 /* eslint-disable no-unused-vars */
 import axios from "axios";
-
 import { useState } from "react";
 import { useSelector } from "react-redux";
 import Swal from "sweetalert2";
 
 const AddClass = () => {
   const data = useSelector((state) => state.userInfo.value);
-
   const instructorname = data.username;
   const email = data.email;
   const id = data.id;
@@ -21,7 +19,7 @@ const AddClass = () => {
 
   const handleCreateClass = async () => {
     try {
-      let data = await axios.post(
+      await axios.post(
         `https://creative-school-design.onrender.com/api/v1/classes/createclass`,
         {
           instructorname: instructorname,
