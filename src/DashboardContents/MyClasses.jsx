@@ -1,6 +1,8 @@
+/* eslint-disable no-undef */
 /* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable react/jsx-key */
 import axios from "axios";
+
 import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
@@ -13,7 +15,7 @@ const MyClasses = () => {
   useEffect(() => {
     const myClassDetails = async () => {
       const data = await axios.get(
-        "http://localhost:8080/api/v1/classes/myclasses",
+        `https://creative-school-design.onrender.com/api/v1/classes/myclasses`,
         {
           params: {
             instructorid: instructorid,

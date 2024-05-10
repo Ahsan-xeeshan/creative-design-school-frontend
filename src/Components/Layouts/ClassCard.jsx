@@ -4,14 +4,14 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
 import Container from "./Container";
-import "dotenv/config";
 
 const ClassCard = () => {
-  const api = process.env.REACT_APP_BASE_URL;
   const [classData, setClassData] = useState([]);
   useEffect(() => {
     const classDetails = async () => {
-      const data = await axios.get(`${api}/classes/allclasses`);
+      const data = await axios.get(
+        `https://creative-school-design.onrender.com/api/v1/classes/allclasses`
+      );
       setClassData(data.data);
     };
     classDetails();

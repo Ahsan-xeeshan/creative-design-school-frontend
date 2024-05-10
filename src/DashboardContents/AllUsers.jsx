@@ -1,18 +1,19 @@
 /* eslint-disable no-undef */
 import axios from "axios";
-import "dotenv/config";
+
 import { useEffect, useState } from "react";
 import Swal from "sweetalert2";
 
 /* eslint-disable react/jsx-key */
 const AllUsers = () => {
   const [userData, setUserData] = useState([]);
-  const api = process.env.REACT_APP_BASE_URL;
 
   useEffect(() => {
     const userDetails = () => {
       axios
-        .get(`${api}/authentication/allusers`)
+        .get(
+          `https://creative-school-design.onrender.com/api/v1/authentication/allusers`
+        )
         .then((res) => {
           setUserData(res.data);
         })
@@ -21,7 +22,7 @@ const AllUsers = () => {
         });
     };
     userDetails();
-  }, []);
+  }, [userData]);
 
   const handleAdmin = async (id) => {
     try {
@@ -37,9 +38,12 @@ const AllUsers = () => {
       });
 
       if (result.isConfirmed) {
-        await axios.post(`${api}/authentication/beadmin`, {
-          id,
-        });
+        await axios.post(
+          `https://creative-school-design.onrender.com/api/v1/authentication/beadmin`,
+          {
+            id,
+          }
+        );
         console.log("Role updated for user with id:", id);
         Swal.fire("Success!", "User role updated to admin.", "success");
       }
@@ -63,9 +67,12 @@ const AllUsers = () => {
       });
 
       if (result.isConfirmed) {
-        await axios.post(`${api}/authentication/bestudent`, {
-          id,
-        });
+        await axios.post(
+          `https://creative-school-design.onrender.com/api/v1/authentication/bestudent`,
+          {
+            id,
+          }
+        );
         location.reload(true);
         console.log("Role updated for user with id:", id);
         Swal.fire("Success!", "User role updated to student.", "success");
@@ -90,9 +97,12 @@ const AllUsers = () => {
       });
 
       if (result.isConfirmed) {
-        await axios.post(`${api}/authentication/beinstructor`, {
-          id,
-        });
+        await axios.post(
+          `https://creative-school-design.onrender.com/api/v1/authentication/beinstructor`,
+          {
+            id,
+          }
+        );
         console.log("Role updated for user with id:", id);
         Swal.fire("Success!", "User role updated to instructor.", "success");
       }

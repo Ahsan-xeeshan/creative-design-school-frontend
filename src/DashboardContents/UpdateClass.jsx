@@ -2,14 +2,13 @@
 /* eslint-disable react/prop-types */
 /* eslint-disable no-unused-vars */
 import axios from "axios";
-import "dotenv/config";
+
 import { useState } from "react";
 import { useSelector } from "react-redux";
 import { useLocation, useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
 
 const UpdateClass = () => {
-  const api = process.env.REACT_APP_BASE_URL;
   const location = useLocation();
   const navigate = useNavigate();
   const { from } = location.state; // Provide a default value for from if location.state is null
@@ -41,16 +40,19 @@ const UpdateClass = () => {
       });
 
       if (result.isConfirmed) {
-        await axios.post(`${api}/classes/updateclass/${from._id}`, {
-          instructorname: instructorname,
-          email: email,
-          instructorid: id,
-          image: updatedImage,
-          classname: updatedClassname,
-          price: updatedPrice,
-          category: updatedCategory,
-          quantity: updatedCategory,
-        });
+        await axios.post(
+          `https://creative-school-design.onrender.com/api/v1/classes/updateclass/${from._id}`,
+          {
+            instructorname: instructorname,
+            email: email,
+            instructorid: id,
+            image: updatedImage,
+            classname: updatedClassname,
+            price: updatedPrice,
+            category: updatedCategory,
+            quantity: updatedCategory,
+          }
+        );
         navigate("/dashboard/my-classes");
         console.log("class updated for user with id:", id);
         Swal.fire("Success!", "Class Updated Successfully.", "success");

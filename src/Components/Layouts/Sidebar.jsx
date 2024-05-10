@@ -1,6 +1,6 @@
 /* eslint-disable no-undef */
 import axios from "axios";
-import "dotenv/config";
+
 import { FaList, FaUsers } from "react-icons/fa6";
 import { GrCheckboxSelected } from "react-icons/gr";
 import { IoHome } from "react-icons/io5";
@@ -16,7 +16,6 @@ import Swal from "sweetalert2";
 import { loggedOutUser } from "../../slices/logoutSlice";
 
 const Sidebar = () => {
-  const api = process.env.REACT_APP_BASE_URL;
   const data = useSelector((state) => state.userInfo.value);
   const dispatch = useDispatch();
 
@@ -34,7 +33,9 @@ const Sidebar = () => {
       });
 
       if (result.isConfirmed) {
-        await axios.post(`${api}/authentication/logout`);
+        await axios.post(
+          `https://creative-school-design.onrender.com/api/v1/authentication/logout`
+        );
         localStorage.clear();
         dispatch(loggedOutUser());
         location.reload(true);

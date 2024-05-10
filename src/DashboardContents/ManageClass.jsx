@@ -1,4 +1,6 @@
+/* eslint-disable no-undef */
 import axios from "axios";
+
 import { useEffect, useState } from "react";
 import Swal from "sweetalert2";
 
@@ -10,7 +12,7 @@ const ManageClass = () => {
     const fetchClassDetails = async () => {
       try {
         const response = await axios.get(
-          "http://localhost:8080/api/v1/classes/allclasses"
+          `https://creative-school-design.onrender.com/api/v1/classes/allclasses`
         );
         setClassData(response.data);
         // Initialize feedbackData with empty feedback for each class
@@ -26,10 +28,13 @@ const ManageClass = () => {
 
   const handleFeedback = async (id, feedback) => {
     try {
-      await axios.post("http://localhost:8080/api/v1/classes/updatefeedback", {
-        id,
-        feedback,
-      });
+      await axios.post(
+        `https://creative-school-design.onrender.com/api/v1/classes/updatefeedback`,
+        {
+          id,
+          feedback,
+        }
+      );
 
       console.log("Feedback updated for class with id:", id);
       Swal.fire("Success!", "Feedback Updated Successfully", "success");
@@ -62,7 +67,7 @@ const ManageClass = () => {
       });
 
       if (result.isConfirmed) {
-        await axios.post("http://localhost:8080/api/v1/classes/classaccept", {
+        await axios.post(`${api}/classes/classaccept`, {
           id,
         });
         location.reload(true);
@@ -89,9 +94,12 @@ const ManageClass = () => {
       });
 
       if (result.isConfirmed) {
-        await axios.post("http://localhost:8080/api/v1/classes/classreject", {
-          id,
-        });
+        await axios.post(
+          `https://creative-school-design.onrender.com/api/v1/classes/classreject`,
+          {
+            id,
+          }
+        );
         location.reload(true);
         console.log("Role updated for user with id:", id);
         Swal.fire("Success!", "Class Rejected", "success");

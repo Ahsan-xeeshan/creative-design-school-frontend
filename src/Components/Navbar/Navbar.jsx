@@ -2,7 +2,7 @@
 /* eslint-disable react/jsx-key */
 import { Transition } from "@headlessui/react";
 import axios from "axios";
-import "dotenv/config";
+
 import { Button } from "flowbite-react";
 import { useState } from "react";
 import { BsInfoCircle } from "react-icons/bs";
@@ -17,7 +17,6 @@ import Swal from "sweetalert2";
 
 import { loggedOutUser } from "../../slices/logoutSlice";
 const Navbar = () => {
-  const api = process.env.REACT_APP_BASE_URL;
   const [isOpen, setIsOpen] = useState(false);
   const data = useSelector((state) => state.userInfo.value);
   const dispatch = useDispatch();
@@ -81,7 +80,9 @@ const Navbar = () => {
       });
 
       if (result.isConfirmed) {
-        await axios.post(`${api}/authentication/logout`);
+        await axios.post(
+          `https://creative-school-design.onrender.com/api/v1/authentication/logout`
+        );
         localStorage.clear();
         dispatch(loggedOutUser());
         location.reload(true);
@@ -180,7 +181,7 @@ const Navbar = () => {
                     to={item.path}
                     className={`bg-transparent ${
                       item.name === "" ? "hidden" : "block"
-                    } last:rounded-e-lg first:rounded-s-lg   hover:bg-[#DCDDDF] px-3 py-2  text-[13px] font-medium flex items-center gap-2`}
+                    } last:rounded-e-lg first:rounded-s-lg hover:bg-[#DCDDDF] px-3 py-2  text-[13px] font-medium flex items-center gap-2`}
                   >
                     {item.icon} {item.name} {item.htmlElement}
                   </Link>
