@@ -68,10 +68,7 @@ const ManageClass = () => {
 
       if (result.isConfirmed) {
         await axios.post(
-          `https://creative-school-design.onrender.com/api/v1/classes/classaccept`,
-          {
-            id,
-          }
+          `https://creative-school-design.onrender.com/api/v1/classes/classaccept/${id}`
         );
         location.reload(true);
         console.log("Role updated for user with id:", id);
