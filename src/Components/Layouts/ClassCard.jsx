@@ -22,7 +22,7 @@ const ClassCard = () => {
 
   const handleCart = async (item) => {
     try {
-      const response = await axios.post(
+      await axios.post(
         `https://creative-school-design.onrender.com/api/v1/classes/purchaseclass`,
         {
           classname: item.classname,
