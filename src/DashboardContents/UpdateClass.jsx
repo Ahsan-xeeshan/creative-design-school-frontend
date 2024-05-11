@@ -25,7 +25,8 @@ const UpdateClass = () => {
   const [updatedPrice, setUpdatedPrice] = useState(from.price);
   const [updatedQuantity, setUpdatedQuantity] = useState(from.quantity);
 
-  const handleUpdateClass = async () => {
+  const handleUpdateClass = async (e) => {
+    e.preventDefault();
     try {
       // Assuming data contains a success message or relevant data
       const result = await Swal.fire({
