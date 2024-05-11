@@ -176,7 +176,9 @@ const Signup = () => {
                   </a>
                 </div>
               </form>
-              <p className="text-2xl text-red-600"></p>
+              {errorMsg && (
+                <p className="absolute text-2xl text-red-600">{errorMsg}</p>
+              )}
               <p className="text-2xl text-red-600"></p>
               <p className="my-4 font-semibold text-center">
                 Already have an account?
