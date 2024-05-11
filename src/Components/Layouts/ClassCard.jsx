@@ -9,6 +9,7 @@ import Container from "./Container";
 const ClassCard = () => {
   const data = useSelector((state) => state.userInfo.value);
   const [classData, setClassData] = useState([]);
+
   useEffect(() => {
     const classDetails = async () => {
       const data = await axios.get(
@@ -18,6 +19,10 @@ const ClassCard = () => {
     };
     classDetails();
   }, [classData]);
+
+  const handleCart = (id) => {
+    console.log(id);
+  };
 
   return (
     <div>
@@ -82,6 +87,7 @@ const ClassCard = () => {
                     <button
                       className="p-3  font-bold rounded-xl bg-blue-200 text-blue-800            
               "
+                      onClick={() => handleCart(item._id)}
                     >
                       Add to Cart
                     </button>
