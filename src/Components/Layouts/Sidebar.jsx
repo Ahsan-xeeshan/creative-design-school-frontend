@@ -38,6 +38,7 @@ const Sidebar = () => {
         );
         localStorage.clear();
         dispatch(loggedOutUser());
+        location.reload(true);
         location.href = "/login";
         Swal.fire(
           "Logged Out!",
