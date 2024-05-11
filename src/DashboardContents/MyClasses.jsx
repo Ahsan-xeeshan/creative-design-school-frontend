@@ -27,6 +27,57 @@ const MyClasses = () => {
     myClassDetails();
   }, [data.id]);
 
+  const handleDelete = async (id) => {
+    // Display SweetAlert confirmation dialog
+    const confirmed = await Swal.fire({
+      title: "Are you sure?",
+      text: "Once deleted, you will not be able to recover this class!",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonText: "Yes, delete it!",
+      cancelButtonText: "No, cancel!",
+      reverseButtons: true,
+    });
+
+    // If user confirms deletion
+    if (confirmed.isConfirmed) {
+      try {
+        // Send delete request
+        const response = await axios.delete(
+          `https://creative-school-design.onrender.com/api/v1/classes/deleteclass/${id}`
+        );
+
+        // Handle success response
+        if (response.status === 200) {
+          // Display success message
+          await Swal.fire(
+            "Deleted!",
+            "Your class has been deleted.",
+            "success"
+          );
+          // Optionally, you can redirect or refresh the page after deletion
+        } else {
+          // Display error message if deletion fails
+          await Swal.fire(
+            "Error!",
+            "Failed to delete class. Please try again later.",
+            "error"
+          );
+        }
+      } catch (error) {
+        // Display error message if request fails
+        await Swal.fire(
+          "Error!",
+          "Failed to delete class. Please try again later.",
+          "error"
+        );
+      }
+    } else {
+      // If user cancels deletion
+      await Swal.fire("Cancelled", "Your class is safe :)", "info");
+    }
+  };
+
   return (
     <div>
       <Container>
@@ -108,6 +159,7 @@ const MyClasses = () => {
                     <button
                       className="p-3  font-bold rounded-xl bg-red-400 text-white transition-all duration-300 hover:bg-red-500            
               "
+                      onClick={() => handleDelete(item._id)}
                     >
                       Delete
                     </button>

@@ -181,7 +181,7 @@ const Navbar = () => {
                     to={item.path}
                     className={`bg-transparent ${
                       item.name === "" ? "hidden" : "block"
-                    } last:rounded-e-lg first:rounded-s-lg hover:bg-[#DCDDDF] px-3 py-2  text-[13px] font-medium flex items-center gap-2`}
+                    } last:rounded-e-lg first:rounded-s-lg hover:bg-[#DCDDDF] hover:rounded-e-lg px-3 py-2  text-[13px] font-medium flex items-center gap-2`}
                   >
                     {item.icon} {item.name} {item.htmlElement}
                   </Link>
