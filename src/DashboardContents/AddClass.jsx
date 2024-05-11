@@ -37,7 +37,7 @@ const AddClass = () => {
           icon: "success",
           title: "Class created successfully!",
           showConfirmButton: false,
-          timer: 1500, // Close alert after 1.5 seconds
+          timer: 3000, // Close alert after 1.5 seconds
         });
       } else {
         Swal.fire({

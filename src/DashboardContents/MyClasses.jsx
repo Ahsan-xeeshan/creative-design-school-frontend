@@ -25,7 +25,7 @@ const MyClasses = () => {
       setMyClassData(data.data);
     };
     myClassDetails();
-  }, [data.id]);
+  }, [data]);
 
   const handleDelete = async (id) => {
     // Display SweetAlert confirmation dialog
