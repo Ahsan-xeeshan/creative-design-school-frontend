@@ -28,7 +28,7 @@ const ClassCard = () => {
           classname: item.classname,
           image: item.image,
           price: item.price,
-          buyerId: data._id,
+          buyerId: data.id,
         }
       );
       // Assuming the request was successful
