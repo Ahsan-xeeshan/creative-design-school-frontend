@@ -6,6 +6,7 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
+import Swal from "sweetalert2";
 import Container from "../Components/Layouts/Container";
 const MyClasses = () => {
   const data = useSelector((state) => state.userInfo.value);
@@ -60,7 +61,7 @@ const MyClasses = () => {
           // Display error message if deletion fails
           await Swal.fire(
             "Error!",
-            "Failed to delete class. Please try again later.",
+            "Oops!, Failed to delete class. Please try again later.",
             "error"
           );
         }
