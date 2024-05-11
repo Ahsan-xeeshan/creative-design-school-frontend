@@ -162,7 +162,7 @@ const MyClasses = () => {
                     <button
                       className="p-3  font-bold rounded-xl bg-red-400 text-white transition-all duration-300 hover:bg-red-500            
               "
-                      onClick={() => handleDelete(item_id)}
+                      onClick={() => handleDelete(item._id)}
                     >
                       Delete
                     </button>
