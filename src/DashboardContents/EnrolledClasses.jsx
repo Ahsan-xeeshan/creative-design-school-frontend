@@ -17,7 +17,7 @@ const EnrolledClasses = () => {
 
   return (
     <div className="bg-white">
-      <div className="w-full">
+      <div className="w-full pl-[400px] pr-10">
         <div className="uppercase font-semibold h-[60px] flex justify-evenly items-center">
           <h3 className="text-3xl font-semibold">
             Total enroll: {enrolledClassData.length}
