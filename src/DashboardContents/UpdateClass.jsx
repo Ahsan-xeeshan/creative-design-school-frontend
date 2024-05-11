@@ -51,7 +51,7 @@ const UpdateClass = () => {
             classname: updatedClassname,
             price: updatedPrice,
             category: updatedCategory,
-            quantity: updatedCategory,
+            quantity: updatedQuantity,
           }
         );
         navigate("/dashboard/my-classes");
