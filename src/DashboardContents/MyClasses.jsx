@@ -46,7 +46,7 @@ const MyClasses = () => {
         const response = await axios.post(
           `https://creative-school-design.onrender.com/api/v1/classes/deleteclass/`,
           {
-            id,
+            data: { id }, // Send class ID in the request body
           }
         );
 
