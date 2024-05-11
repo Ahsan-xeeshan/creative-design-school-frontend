@@ -38,7 +38,7 @@ const MyClasses = () => {
       cancelButtonText: "No, cancel!",
       reverseButtons: true,
     });
-
+    console.log(id);
     // If user confirms deletion
     if (confirmed.isConfirmed) {
       try {
