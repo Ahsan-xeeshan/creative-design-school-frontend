@@ -4,14 +4,13 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
-import { Link, useParams } from "react-router-dom";
+import { Link } from "react-router-dom";
 import Swal from "sweetalert2";
 import Container from "../Components/Layouts/Container";
 const MyClasses = () => {
   const data = useSelector((state) => state.userInfo.value);
   const instructorid = data.id;
   const [myClassData, setMyClassData] = useState([]);
-  const { id } = useParams();
 
   useEffect(() => {
     const myClassDetails = async () => {
@@ -28,7 +27,7 @@ const MyClasses = () => {
     myClassDetails();
   }, [data.id]);
 
-  const handleDelete = async () => {
+  const handleDelete = async (id) => {
     // Display SweetAlert confirmation dialog
     const confirmed = await Swal.fire({
       title: "Are you sure?",
@@ -45,7 +44,10 @@ const MyClasses = () => {
       try {
         // Send delete request
         const response = await axios.delete(
-          `https://creative-school-design.onrender.com/api/v1/classes/deleteclass/${id}`
+          `https://creative-school-design.onrender.com/api/v1/classes/deleteclass`,
+          {
+            id,
+          }
         );
 
         // Handle success response
@@ -160,7 +162,7 @@ const MyClasses = () => {
                     <button
                       className="p-3  font-bold rounded-xl bg-red-400 text-white transition-all duration-300 hover:bg-red-500            
               "
-                      onClick={handleDelete}
+                      onClick={() => handleDelete(item_id)}
                     >
                       Delete
                     </button>
