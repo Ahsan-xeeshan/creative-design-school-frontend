@@ -43,8 +43,11 @@ const MyClasses = () => {
     if (confirmed.isConfirmed) {
       try {
         // Send delete request
-        const response = await axios.delete(
-          `https://creative-school-design.onrender.com/api/v1/classes/deleteclass/${id}`
+        const response = await axios.post(
+          `https://creative-school-design.onrender.com/api/v1/classes/deleteclass/`,
+          {
+            id,
+          }
         );
 
         // Handle success response
