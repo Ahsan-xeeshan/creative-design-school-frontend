@@ -4,8 +4,8 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
+import Swal from "sweetalert2";
 import Container from "./Container";
-
 const ClassCard = () => {
   const data = useSelector((state) => state.userInfo.value);
   const [classData, setClassData] = useState([]);
