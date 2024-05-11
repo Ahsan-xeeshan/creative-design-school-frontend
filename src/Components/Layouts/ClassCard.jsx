@@ -20,8 +20,34 @@ const ClassCard = () => {
     classDetails();
   }, [classData]);
 
-  const handleCart = (id) => {
-    console.log(id);
+  const handleCart = async (item) => {
+    try {
+      const response = await axios.post(
+        `https://creative-school-design.onrender.com/api/v1/classes/purchaseclass`,
+        {
+          classname: item.classname,
+          image: item.image,
+          price: item.price,
+          buyerId: data._id,
+        }
+      );
+      // Assuming the request was successful
+      Swal.fire({
+        icon: "success",
+        title: "Purchase Successful!",
+        text: "Your class has been added to the cart.",
+        confirmButtonText: "OK",
+      });
+    } catch (error) {
+      // If there's an error
+      Swal.fire({
+        icon: "error",
+        title: "Oops...",
+        text: "Something went wrong! Please try again later.",
+        confirmButtonText: "OK",
+      });
+      console.error("Error handling cart:", error);
+    }
   };
 
   return (
@@ -87,7 +113,7 @@ const ClassCard = () => {
                     <button
                       className="p-3  font-bold rounded-xl bg-blue-200 text-blue-800            
               "
-                      onClick={() => handleCart(item._id)}
+                      onClick={() => handleCart(item)}
                     >
                       Add to Cart
                     </button>
