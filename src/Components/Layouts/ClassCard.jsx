@@ -74,7 +74,11 @@ const ClassCard = () => {
                     <span className="text-xl"> {item.feedback}</span>
                   </p>
                 </div>
-                {data !== null && data.role === "student" ? (
+                {data !== null &&
+                data.role === "admin" &&
+                data.role === "instructor" ? (
+                  <div className="hidden"></div>
+                ) : data === null && data.role === "student" ? (
                   <div className="p-4 bg-purple-100 flex h-16 border-t items-center justify-between">
                     <button
                       className="p-3  font-bold rounded-xl bg-blue-200 text-blue-800            
