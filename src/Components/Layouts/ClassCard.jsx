@@ -21,6 +21,20 @@ const ClassCard = () => {
   }, [classData]);
 
   const handleCart = async (item) => {
+    if (!data) {
+      const result = Swal.fire({
+        title: "Please login to enroll class",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#3085d6",
+        cancelButtonColor: "#d33",
+        confirmButtonText: "Yes, Login now!",
+        cancelButtonText: "No, cancel",
+      });
+      if (result.isConfirmed) {
+        navigate("/login");
+      }
+    }
     try {
       await axios.post(
         `https://creative-school-design.onrender.com/api/v1/classes/purchaseclass`,
