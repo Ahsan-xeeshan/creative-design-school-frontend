@@ -54,9 +54,9 @@ const UpdateClass = () => {
             quantity: updatedQuantity,
           }
         );
-        navigate("/dashboard/my-classes");
         console.log("class updated for user with id:", id);
         Swal.fire("Success!", "Class Updated Successfully.", "success");
+        navigate("/dashboard/my-classes");
       }
     } catch (error) {
       console.error("Error updating class for user with id:", id, error);

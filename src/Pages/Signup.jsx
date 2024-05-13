@@ -38,6 +38,10 @@ const Signup = () => {
   };
   console.log(registrationData);
   const handleSignUp = async () => {
+    if (registrationData.password !== registrationData.confirmpassword) {
+      setErrorMsg("Passwords do not match");
+      return; // Exit the function early
+    }
     const data = await axios.post(
       `https://creative-school-design.onrender.com/api/v1/authentication/registration`,
       {
@@ -64,7 +68,8 @@ const Signup = () => {
         navigate("/login");
       }, 3000);
     } else {
-      setErrorMsg(data.data.error);
+      console.log(data.data);
+      setErrorMsg(data.data);
     }
   };
   return (
@@ -78,7 +83,7 @@ const Signup = () => {
             <div className="flex flex-1 flex-col p-8 gap-2 text-[#570df8]">
               <h1 className="text-3xl text-center font-bold">Sign Up</h1>
               <form>
-                <label htmlFor="#">Name</label>
+                <label htmlFor="name">Name</label>
                 <input
                   required
                   type="text"
@@ -87,7 +92,7 @@ const Signup = () => {
                   onChange={handleChange}
                   className=" bg-sky-50 mb-4 w-full border-none rounded-xl"
                 />
-                <label htmlFor="#">Photo</label>
+                <label htmlFor="photourl">Photo</label>
                 <input
                   required
                   type="text"
@@ -96,7 +101,7 @@ const Signup = () => {
                   onChange={handleChange}
                   className=" bg-sky-50 mb-4 w-full border-none  rounded-xl"
                 />
-                <label htmlFor="#">Email</label>
+                <label htmlFor="email">Email</label>
                 <input
                   required
                   type="email"
@@ -105,7 +110,7 @@ const Signup = () => {
                   onChange={handleChange}
                   className=" bg-sky-50 mb-4 w-full border-none rounded-xl"
                 />
-                <label htmlFor="#">Password</label>
+                <label htmlFor="password">Password</label>
                 <input
                   required
                   type={showValues ? "text" : "password"}
@@ -114,7 +119,7 @@ const Signup = () => {
                   onChange={handleChange}
                   className=" bg-sky-50 input-bordered mb-4 w-full border-none rounded-xl"
                 />
-                <label htmlFor="#">Confirm Password</label>
+                <label htmlFor="confirmpassword">Confirm Password</label>
                 <input
                   required
                   type={showValues ? "text" : "password"}
@@ -177,7 +182,9 @@ const Signup = () => {
                 </div>
               </form>
               {errorMsg && (
-                <p className="absolute text-2xl text-red-600">{errorMsg}</p>
+                <p className="absolute left-32 font-bold w-[250px] bottom-[105px] text-sm text-red-600">
+                  {errorMsg.error}
+                </p>
               )}
               <p className="text-2xl text-red-600"></p>
               <p className="my-4 font-semibold text-center">

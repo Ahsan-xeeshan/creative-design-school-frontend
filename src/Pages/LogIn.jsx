@@ -53,7 +53,7 @@ const LogIn = () => {
       }, 2000);
       setErrorMsg("");
     } else {
-      setErrorMsg(data.data.error);
+      setErrorMsg(data.data);
     }
   };
 
@@ -109,7 +109,9 @@ const LogIn = () => {
                 </div>
               </form>
               {errorMsg && (
-                <p className="absolute text-2xl text-red-600">{errorMsg}</p>
+                <p className="absolute left-32 font-bold w-[250px] bottom-[165px] text-sm text-red-600">
+                  {errorMsg.error}
+                </p>
               )}
               <p className="text-2xl text-red-600"></p>
               <p className="my-4 font-semibold text-center">

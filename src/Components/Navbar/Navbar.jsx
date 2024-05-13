@@ -4,7 +4,7 @@ import { Transition } from "@headlessui/react";
 import axios from "axios";
 
 import { Button } from "flowbite-react";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { BsInfoCircle } from "react-icons/bs";
 import { CiLogin } from "react-icons/ci";
 import { FaRegMoon } from "react-icons/fa";
@@ -21,6 +21,24 @@ const Navbar = () => {
   const data = useSelector((state) => state.userInfo.value);
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const buyerId = data ? data.id : null;
+
+  const [selectedClassData, setSelectedClassData] = useState([]);
+
+  useEffect(() => {
+    const mySelectedClass = async () => {
+      const data = await axios.get(
+        `https://creative-school-design.onrender.com/api/v1/classes/selectedclasses`,
+        {
+          params: {
+            buyerId: buyerId,
+          },
+        }
+      );
+      setSelectedClassData(data.data);
+    };
+    mySelectedClass();
+  }, [buyerId]);
 
   const menuItems = [
     { name: "Home", path: "/", icon: <RxHome /> },
@@ -45,7 +63,7 @@ const Navbar = () => {
           name: "Selected Classes ",
           htmlElement: (
             <span className="bg-black text-white uppercase py-1 px-2 text-[9px] rounded-lg">
-              2+
+              {selectedClassData.length}+
             </span>
           ),
           path: "/dashboard/selected-classes",

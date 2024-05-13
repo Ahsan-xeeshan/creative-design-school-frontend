@@ -4,11 +4,14 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
 import Container from "./Container";
 const ClassCard = () => {
-  const data = useSelector((state) => state.userInfo.value);
+  let data = useSelector((state) => state.userInfo.value);
+  console.log(data);
   const [classData, setClassData] = useState([]);
+  const navigate = useNavigate();
 
   useEffect(() => {
     const classDetails = async () => {
@@ -21,37 +24,39 @@ const ClassCard = () => {
   }, [classData]);
 
   const handleCart = async (item) => {
-    if (!data) {
-      const result = Swal.fire({
-        title: "Please login to enroll class",
-        icon: "warning",
-        showCancelButton: true,
-        confirmButtonColor: "#3085d6",
-        cancelButtonColor: "#d33",
-        confirmButtonText: "Yes, Login now!",
-        cancelButtonText: "No, cancel",
-      });
-      if (result.isConfirmed) {
-        navigate("/login");
-      }
-    }
     try {
-      await axios.post(
-        `https://creative-school-design.onrender.com/api/v1/classes/purchaseclass`,
-        {
-          classname: item.classname,
-          image: item.image,
-          price: item.price,
-          buyerId: data.id,
+      if (data) {
+        await axios.post(
+          `https://creative-school-design.onrender.com/api/v1/classes/purchaseclass`,
+          {
+            classname: item.classname,
+            image: item.image,
+            price: item.price,
+            buyerId: data.id,
+          }
+        );
+        Swal.fire({
+          icon: "success",
+          title: "Class added to your cart",
+          text: "Please complete your payment",
+          showConfirmButton: false,
+          timer: 3000,
+        });
+      } else {
+        const result = await Swal.fire({
+          title: "Please login to your account",
+          icon: "warning",
+          showCancelButton: true,
+          confirmButtonColor: "#3085d6",
+          cancelButtonColor: "#d33",
+          confirmButtonText: "Login now!",
+          cancelButtonText: "No, cancel",
+        });
+        if (result.isConfirmed) {
+          console.log("ok fine");
+          navigate("/login");
         }
-      );
-      // Assuming the request was successful
-      Swal.fire({
-        icon: "success",
-        title: "Purchase Successful!",
-        text: "Your class has been added to the cart.",
-        confirmButtonText: "OK",
-      });
+      }
     } catch (error) {
       // If there's an error
       Swal.fire({

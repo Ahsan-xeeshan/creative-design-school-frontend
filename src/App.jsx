@@ -13,6 +13,7 @@ import AllUsers from "./DashboardContents/AllUsers";
 import EnrolledClasses from "./DashboardContents/EnrolledClasses";
 import ManageClass from "./DashboardContents/ManageClass";
 import MyClasses from "./DashboardContents/MyClasses";
+import Payment from "./DashboardContents/Payment";
 import PaymentHistory from "./DashboardContents/PaymentHistory";
 import SelectClass from "./DashboardContents/SelectClass";
 import AllClass from "./Pages/AllClass";
@@ -43,6 +44,7 @@ const router = createBrowserRouter(
         <Route path="update-class" element={<UpdateClass />} />
         <Route path="selected-classes" element={<SelectClass />} />
         <Route path="enrolled-classes" element={<EnrolledClasses />} />
+        <Route path="payment/:id" element={<Payment />} />
         <Route path="payment-history" element={<PaymentHistory />} />
       </Route>
     </Route>
