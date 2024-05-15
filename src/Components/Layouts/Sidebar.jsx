@@ -1,6 +1,7 @@
 /* eslint-disable no-undef */
 import axios from "axios";
 
+import { useEffect, useState } from "react";
 import { FaList, FaUsers } from "react-icons/fa6";
 import { GrCheckboxSelected } from "react-icons/gr";
 import { IoHome } from "react-icons/io5";
@@ -14,9 +15,30 @@ import { useDispatch, useSelector } from "react-redux";
 import { Link, Outlet } from "react-router-dom";
 import Swal from "sweetalert2";
 import { loggedOutUser } from "../../slices/logoutSlice";
+import Preloader from "./Preloader";
 
 const Sidebar = () => {
   const data = useSelector((state) => state.userInfo.value);
+  const [isPending, setIsPending] = useState(false);
+
+  const handleLinkClick = () => {
+    // Set isPending to true before transitioning
+    setIsPending(true);
+    // Start a transition to prioritize rendering updates
+    startTransition(() => {
+      setIsPending(false); // Reset isPending after transition
+    });
+  };
+
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    // Simulate some asynchronous operation
+    setTimeout(() => {
+      setLoading(false); // Set loading to false after the operation is complete
+    }, 1000); // Simulating a 2-second loading delay
+  }, []);
+
   const dispatch = useDispatch();
 
   const handleLogout = async () => {
@@ -55,7 +77,7 @@ const Sidebar = () => {
   return (
     <div className="flex">
       <div
-        className="bg-[#014BCC] fixed w-1/6 h-screen transition-transform -translate-x-full sm:translate-x-0"
+        className="bg-[#014BCC] fixed w-1/6 h-screen hidden lg:block"
         aria-label="Sidebar"
       >
         <div className="h-full px-3 py-4 overflow-y-auto">
@@ -72,6 +94,7 @@ const Sidebar = () => {
                 <Link
                   to="manage-classes"
                   className="flex items-center p-2 text-white rounded-lg hover:bg-[#3045697e] group focus:bg-[#570DF8]"
+                  onClick={handleLinkClick}
                 >
                   <MdOutlineManageHistory className="text-2xl font-bold" />
                   <span className="flex-1 ms-3 whitespace-nowrap text-2xl">
@@ -84,6 +107,7 @@ const Sidebar = () => {
               {data !== null && data.role == "admin" && (
                 <Link
                   to="all-users"
+                  onClick={handleLinkClick}
                   className="flex items-center p-2 text-white rounded-lg hover:bg-[#3045697e] group focus:bg-[#570DF8]"
                 >
                   <FaUsers className="text-2xl font-bold" />
@@ -97,6 +121,7 @@ const Sidebar = () => {
               {data !== null && data.role == "instructor" && (
                 <Link
                   to="my-classes"
+                  onClick={handleLinkClick}
                   className="flex items-center p-2 text-white rounded-lg hover:bg-[#3045697e] group focus:bg-[#570DF8]"
                 >
                   <FaList className="text-2xl font-bold" />
@@ -110,6 +135,7 @@ const Sidebar = () => {
               {data !== null && data.role == "instructor" && (
                 <Link
                   to="add-class"
+                  onClick={handleLinkClick}
                   className="flex items-center p-2 text-white rounded-lg hover:bg-[#3045697e] group focus:bg-[#570DF8]"
                 >
                   <MdOutlineAddToPhotos className="text-2xl font-bold" />
@@ -123,6 +149,7 @@ const Sidebar = () => {
               {data !== null && data.role == "student" && (
                 <Link
                   to="selected-classes"
+                  onClick={handleLinkClick}
                   className="flex items-center p-2 text-white rounded-lg hover:bg-[#3045697e] group focus:bg-[#570DF8]"
                 >
                   <GrCheckboxSelected className="text-2xl font-bold" />
@@ -137,6 +164,7 @@ const Sidebar = () => {
               {data !== null && data.role == "student" && (
                 <Link
                   to="enrolled-classes"
+                  onClick={handleLinkClick}
                   className="flex items-center p-2 text-white rounded-lg hover:bg-[#3045697e] group focus:bg-[#570DF8]"
                 >
                   <MdOutlineAlignHorizontalCenter className="text-2xl font-bold" />
@@ -150,6 +178,7 @@ const Sidebar = () => {
               {data !== null && data.role == "student" && (
                 <Link
                   to="payment-history"
+                  onClick={handleLinkClick}
                   className="flex items-center p-2 text-white rounded-lg hover:bg-[#3045697e] group focus:bg-[#570DF8]"
                 >
                   <MdOutlinePayment className="text-2xl font-bold" />
@@ -164,6 +193,7 @@ const Sidebar = () => {
             <li>
               <Link
                 to="/"
+                onClick={handleLinkClick}
                 className="flex items-center p-2 text-white rounded-lg hover:bg-[#3045697e] group focus:bg-[#570DF8]"
               >
                 <IoHome className="text-2xl font-bold" />
@@ -175,6 +205,7 @@ const Sidebar = () => {
             <li>
               <Link
                 to="/all-classes"
+                onClick={handleLinkClick}
                 className="flex items-center p-2 text-white rounded-lg hover:bg-[#3045697e] group focus:bg-[#570DF8]"
               >
                 <span className="flex-1 ms-3 whitespace-nowrap text-2xl">
@@ -195,7 +226,12 @@ const Sidebar = () => {
       </div>
 
       <div className="w-full">
-        <Outlet />
+        {loading ? (
+          // Render your preloader component here while data is loading
+          <Preloader />
+        ) : (
+          <Outlet />
+        )}
       </div>
     </div>
   );

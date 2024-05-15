@@ -41,7 +41,7 @@ const Footer = () => {
       </div>
       <div className="md:flex flex-wrap p-[15px]">
         <div className="py-10 sm:w-1/2 lg:w-1/4 text-center sm:text-left">
-          <p className="w-[365px] md:w-[340px] lg:w-[220px] xl:w-[390px]">
+          <p className="w-[300px] md:w-[340px] lg:w-[220px] xl:w-[390px]">
             Creative design school is a premier creative design school that
             ignites the spark of imagination and empowers students to become
             innovative thinkers and creators.

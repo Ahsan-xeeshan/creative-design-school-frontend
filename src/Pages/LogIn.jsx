@@ -3,11 +3,11 @@
 import axios from "axios";
 
 import { useState } from "react";
-import { FaGoogle } from "react-icons/fa";
 import { useDispatch } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
 import Container from "../Components/Layouts/Container";
+import OAuth from "../Components/Layouts/OAuth";
 import login from "../assets/login.jpg";
 import { loggedInUser } from "../slices/userSlices";
 const LogIn = () => {
@@ -17,6 +17,16 @@ const LogIn = () => {
   });
   const [successMsg, setSuccessMsg] = useState("");
   const [errorMsg, setErrorMsg] = useState("");
+  const [isPending, setIsPending] = useState(false);
+
+  const handleLinkClick = () => {
+    // Set isPending to true before transitioning
+    setIsPending(true);
+    // Start a transition to prioritize rendering updates
+    startTransition(() => {
+      setIsPending(false); // Reset isPending after transition
+    });
+  };
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
@@ -98,15 +108,7 @@ const LogIn = () => {
                 >
                   OR
                 </div>
-                <div className="mt-4 flex gap-x-2">
-                  <a
-                    href="#"
-                    type="button"
-                    className="flex w-full items-center justify-center rounded-md border-none p-2 hover:bg-orange-300 focus:ring-2 focus:ring-violet-600 focus:ring-offset-1"
-                  >
-                    <FaGoogle className="text-xl" />
-                  </a>
-                </div>
+                <OAuth />
               </form>
               {errorMsg && (
                 <p className="absolute left-32 font-bold w-[250px] bottom-[165px] text-sm text-red-600">
@@ -116,12 +118,19 @@ const LogIn = () => {
               <p className="text-2xl text-red-600"></p>
               <p className="my-4 font-semibold text-center">
                 You are New -
-                <Link to="/signup" className="text-orange-600 font-bold">
+                <Link
+                  to="/signup"
+                  className="text-orange-600 font-bold"
+                  onClick={handleLinkClick}
+                >
                   Sign Up
                 </Link>
               </p>
               <p className="font-semibold underline text-[#f000b8] text-center">
-                <Link to="/"> Home page</Link>
+                <Link to="/" onClick={handleLinkClick}>
+                  {" "}
+                  Home page
+                </Link>
               </p>
             </div>
           </div>

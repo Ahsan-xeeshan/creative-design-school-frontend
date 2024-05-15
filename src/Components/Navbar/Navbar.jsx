@@ -24,6 +24,16 @@ const Navbar = () => {
   const buyerId = data ? data.id : null;
 
   const [selectedClassData, setSelectedClassData] = useState([]);
+  const [isPending, setIsPending] = useState(false);
+
+  const handleLinkClick = () => {
+    // Set isPending to true before transitioning
+    setIsPending(true);
+    // Start a transition to prioritize rendering updates
+    startTransition(() => {
+      setIsPending(false); // Reset isPending after transition
+    });
+  };
 
   useEffect(() => {
     const mySelectedClass = async () => {
@@ -77,7 +87,12 @@ const Navbar = () => {
           htmlElement: (
             <span className="w-4 h-4 rounded-full bg-[#3ABEF7]"></span>
           ),
-          path: "/dashboard",
+          path:
+            data.role === "admin"
+              ? "/dashboard/manage-classes"
+              : data.role === "instructor"
+              ? "/dashboard/my-classes"
+              : "/dashboard/selected-classes",
         }
       : {
           name: "",
@@ -178,7 +193,10 @@ const Navbar = () => {
                 {data === null ? (
                   <Link
                     to="/login"
-                    className="flex items-center gap-2 text-base uppercase text-[#4406CB]"
+                    className={`flex items-center gap-2 text-base uppercase text-[#4406CB] ${
+                      isPending ? "block" : "block"
+                    }`}
+                    onClick={handleLinkClick}
                   >
                     Login <CiLogin className="text-xl font-bold" />
                   </Link>
@@ -199,7 +217,10 @@ const Navbar = () => {
                     to={item.path}
                     className={`bg-transparent ${
                       item.name === "" ? "hidden" : "block"
+                    } ${
+                      isPending ? "block" : "block"
                     } last:rounded-e-lg first:rounded-s-lg hover:bg-[#DCDDDF] hover:rounded-e-lg px-3 py-2  text-[13px] font-medium flex items-center gap-2`}
+                    onClick={handleLinkClick}
                   >
                     {item.icon} {item.name} {item.htmlElement}
                   </Link>
@@ -226,7 +247,10 @@ const Navbar = () => {
           {data === null ? (
             <Link
               to="/login"
-              className="flex items-center gap-2 px-1 py-3 rounded-lg font-semibold transition-all duration-300 text-base uppercase text-[#4406CB] hover:bg-[#4406CB] hover:text-white"
+              className={`${
+                isPending ? "block" : "block"
+              } flex items-center gap-2 px-1 py-3 rounded-lg font-semibold transition-all duration-300 text-base uppercase text-[#4406CB] hover:bg-[#4406CB] hover:text-white`}
+              onClick={handleLinkClick}
             >
               Login <CiLogin className="text-xl font-bold" />
             </Link>

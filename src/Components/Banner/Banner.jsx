@@ -35,6 +35,7 @@ export default function Banner() {
           clickable: true,
         }}
         navigation={true}
+        effect="fade"
         modules={[Autoplay, Pagination, Navigation]}
         onAutoplayTimeLeft={onAutoplayTimeLeft}
         className="mySwiper"

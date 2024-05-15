@@ -84,12 +84,14 @@ const SelectClass = () => {
 
   return (
     <div className="bg-white">
-      <div className="w-full pl-[400px] pr-10">
-        <div className="uppercase font-semibold h-[60px] flex justify-evenly items-center">
-          <h3 className="text-3xl font-semibold">
+      <div className="w-full lg:pl-[400px] lg:pr-10">
+        <div className="uppercase px-5 md:px-0 py-1 md:py-0 font-semibold h-[60px] md:flex md:justify-evenly md:items-center">
+          <h3 className="text-xl md:text-3xl font-semibold">
             Total Items: {selectedClassData.length}
           </h3>
-          <h3 className="text-3xl font-semibold">Total Price: ${totalPrice}</h3>
+          <h3 className="text-xl md:text-3xl font-semibold">
+            Total Price: ${totalPrice}
+          </h3>
         </div>
         <div className="overflow-x-auto w-full">
           <table className="table-auto w-full text-center">
@@ -104,9 +106,9 @@ const SelectClass = () => {
               </tr>
             </thead>
             <tbody>
-              {selectedClassData.map((item) => (
-                <tr key={item.id}>
-                  <td className="border">{item.id}</td>
+              {selectedClassData.map((item, index) => (
+                <tr key={index}>
+                  <td className="border">{index + 1}</td>
                   <td className="text-center border">
                     <div className="w-14 h-14 mx-auto">
                       <img

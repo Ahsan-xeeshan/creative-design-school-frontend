@@ -1,18 +1,27 @@
 /* eslint-disable no-undef */
 /* eslint-disable no-unused-vars */
 import axios from "axios";
-
 import { useState } from "react";
-import { FaGoogle } from "react-icons/fa";
 import { Link, useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
 import Container from "../Components/Layouts/Container";
+import OAuth from "../Components/Layouts/OAuth";
 import register from "../assets/register.jpg";
 const Signup = () => {
   const [checked, setChecked] = useState(false);
   const [showValues, setShowValues] = useState(false);
   const [successMsg, setSuccessMsg] = useState(false);
   const [errorMsg, setErrorMsg] = useState("");
+  const [isPending, setIsPending] = useState(false);
+
+  const handleLinkClick = () => {
+    // Set isPending to true before transitioning
+    setIsPending(true);
+    // Start a transition to prioritize rendering updates
+    startTransition(() => {
+      setIsPending(false); // Reset isPending after transition
+    });
+  };
 
   const navigate = useNavigate();
 
@@ -36,7 +45,7 @@ const Signup = () => {
       [e.target.name]: e.target.value,
     });
   };
-  console.log(registrationData);
+
   const handleSignUp = async () => {
     if (registrationData.password !== registrationData.confirmpassword) {
       setErrorMsg("Passwords do not match");
@@ -171,15 +180,7 @@ const Signup = () => {
                 >
                   OR
                 </div>
-                <div className="mt-4 flex gap-x-2">
-                  <a
-                    href="#"
-                    type="button"
-                    className="flex w-full items-center justify-center rounded-md border-none p-2 hover:bg-orange-300 focus:ring-2 focus:ring-violet-600 focus:ring-offset-1"
-                  >
-                    <FaGoogle className="text-xl" />
-                  </a>
-                </div>
+                <OAuth />
               </form>
               {errorMsg && (
                 <p className="absolute left-32 font-bold w-[250px] bottom-[105px] text-sm text-red-600">
@@ -189,12 +190,19 @@ const Signup = () => {
               <p className="text-2xl text-red-600"></p>
               <p className="my-4 font-semibold text-center">
                 Already have an account?
-                <Link to="/login" className="pl-1 text-orange-600 font-bold">
+                <Link
+                  to="/login"
+                  className="pl-1 text-orange-600 font-bold"
+                  onClick={handleLinkClick}
+                >
                   Log In
                 </Link>
               </p>
               <p className="font-semibold underline text-[#f000b8] text-center">
-                <Link to="/"> Home page</Link>
+                <Link to="/" onClick={handleLinkClick}>
+                  {" "}
+                  Home page
+                </Link>
               </p>
             </div>
           </div>
