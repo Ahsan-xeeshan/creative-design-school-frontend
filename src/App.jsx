@@ -24,6 +24,7 @@ import LogIn from "./Pages/LogIn";
 import Signup from "./Pages/Signup";
 
 import UpdateClass from "./DashboardContents/UpdateClass";
+import ErrorPage from "./Pages/ErrorPage";
 import "./index.css";
 
 const router = createBrowserRouter(
@@ -46,6 +47,7 @@ const router = createBrowserRouter(
         <Route path="enrolled-classes" element={<EnrolledClasses />} />
         <Route path="payment/:id" element={<Payment />} />
         <Route path="payment-history" element={<PaymentHistory />} />
+        <Route path="*" element={<ErrorPage />} />
       </Route>
     </Route>
   )

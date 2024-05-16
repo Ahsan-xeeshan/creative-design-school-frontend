@@ -85,7 +85,7 @@ const SelectClass = () => {
   return (
     <div className="bg-white">
       <div className="w-full lg:pl-[400px] lg:pr-10">
-        <div className="uppercase px-5 md:px-0 py-1 md:py-0 font-semibold h-[60px] md:flex md:justify-evenly md:items-center">
+        <div className="uppercase px-5 md:px-0 py-1 md:py-0 text-center font-semibold h-[60px] md:flex md:justify-evenly md:items-center">
           <h3 className="text-xl md:text-3xl font-semibold">
             Total Items: {selectedClassData.length}
           </h3>
