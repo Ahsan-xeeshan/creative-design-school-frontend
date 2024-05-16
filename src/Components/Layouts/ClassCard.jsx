@@ -6,10 +6,12 @@ import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
+
 import Container from "./Container";
 const ClassCard = () => {
   let data = useSelector((state) => state.userInfo.value);
-  console.log(data);
+
+  const [errorMsg, setErrorMsg] = useState("");
   const [classData, setClassData] = useState([]);
   const navigate = useNavigate();
 
@@ -18,6 +20,7 @@ const ClassCard = () => {
       const data = await axios.get(
         `https://creative-school-design.onrender.com/api/v1/classes/allclasses`
       );
+
       setClassData(data.data);
     };
     classDetails();
@@ -26,22 +29,28 @@ const ClassCard = () => {
   const handleCart = async (item) => {
     try {
       if (data) {
-        await axios.post(
+        const res = await axios.post(
           `https://creative-school-design.onrender.com/api/v1/classes/purchaseclass`,
           {
             classname: item.classname,
             image: item.image,
             price: item.price,
             buyerId: data.id,
+            courseId: item._id,
           }
         );
-        Swal.fire({
-          icon: "success",
-          title: "Class added to your cart",
-          text: "Please complete your payment",
-          showConfirmButton: false,
-          timer: 3000,
-        });
+
+        if (res.data.success) {
+          Swal.fire({
+            icon: "success",
+            title: "Class added to your cart",
+            text: "Please complete your payment",
+            showConfirmButton: false,
+            timer: 3000,
+          });
+
+          setErrorMsg("");
+        }
       } else {
         const result = await Swal.fire({
           title: "Please login to your account",
@@ -53,7 +62,6 @@ const ClassCard = () => {
           cancelButtonText: "No, cancel",
         });
         if (result.isConfirmed) {
-          console.log("ok fine");
           navigate("/login");
         }
       }
@@ -61,8 +69,8 @@ const ClassCard = () => {
       // If there's an error
       Swal.fire({
         icon: "error",
-        title: "Oops...",
-        text: "Something went wrong! Please try again later.",
+        title: "SORRY",
+        text: "This class already taken by you.",
         confirmButtonText: "OK",
       });
       console.error("Error handling cart:", error);
@@ -129,12 +137,47 @@ const ClassCard = () => {
                   <div className="hidden"></div>
                 ) : (
                   <div className="p-4 bg-purple-100 flex h-16 border-t items-center justify-between">
+                    {/* {item.quantity === "0" ? (
+                      <button className="p-3 font-bold rounded-xl bg-blue-200 text-blue-800 ">
+                        Add to Cart
+                      </button>
+                    ) : item?.classSelector && data &&
+                      data.id === item?.classSelector.includes(data.id) ? (
+                      <button
+                        className="p-3 font-bold rounded-xl bg-blue-200 text-blue-800 disabled:bg-[#829486]"
+                        onClick={() => handleCart(item)}
+                      >
+                        Add to Cart
+                      </button>
+                    ) : (
+                      <button
+                        className="p-3 font-bold rounded-xl bg-blue-200 text-white disabled:bg-[#415a46]"
+                        disabled
+                      >
+                        Added
+                      </button>
+                    )} */}
                     <button
-                      className="p-3  font-bold rounded-xl bg-blue-200 text-blue-800            
-              "
+                      className="p-3 font-bold rounded-xl bg-blue-200 text-blue-800 disabled:bg-[#829486]"
                       onClick={() => handleCart(item)}
+                      disabled={
+                        item.quantity === "0" ||
+                        (data &&
+                          data.id &&
+                          item.classSelector &&
+                          item.classSelector.includes(data.id))
+                      }
                     >
-                      Add to Cart
+                      {
+                        item.quantity === "0"
+                          ? "Unavailable Seat" // Condition to check if quantity is 0
+                          : data &&
+                            data.id &&
+                            item.classSelector &&
+                            item.classSelector.includes(data.id)
+                          ? "Added"
+                          : "Add to Cart" // Condition to check if the item is already in the cart
+                      }
                     </button>
                   </div>
                 )}

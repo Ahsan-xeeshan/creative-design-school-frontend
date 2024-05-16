@@ -3,6 +3,7 @@
 import axios from "axios";
 import { useState } from "react";
 import { useSelector } from "react-redux";
+import Swal from "sweetalert2";
 
 const AddClass = () => {
   const data = useSelector((state) => state.userInfo.value);
@@ -33,14 +34,14 @@ const AddClass = () => {
       );
       // Check if the request was successful
       if (response.status === 200) {
-        Swal.fire({
+        await Swal.fire({
           icon: "success",
           title: "Class created successfully!",
           showConfirmButton: false,
           timer: 3000, // Close alert after 1.5 seconds
         });
       } else {
-        Swal.fire({
+        await Swal.fire({
           icon: "error",
           title: "Oops...",
           text: "Something went wrong!",

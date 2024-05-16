@@ -1,4 +1,8 @@
+import AOS from "aos";
+import "aos/dist/aos.css"; // You can also use <link> for styles
 import { useRef } from "react";
+// ..
+AOS.init();
 // Import Swiper React components
 import { Swiper, SwiperSlide } from "swiper/react";
 import slider1 from "../../assets/slide1.jpg";
@@ -23,7 +27,7 @@ export default function Banner() {
     progressContent.current.textContent = `${Math.ceil(time / 1000)}s`;
   };
   return (
-    <>
+    <div data-aos="zoom-in" data-aos-duration="2000">
       <Swiper
         spaceBetween={30}
         centeredSlides={true}
@@ -63,6 +67,6 @@ export default function Banner() {
           <span ref={progressContent}></span>
         </div>
       </Swiper>
-    </>
+    </div>
   );
 }

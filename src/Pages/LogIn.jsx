@@ -45,7 +45,7 @@ const LogIn = () => {
         password: loginData.password,
       }
     );
-    console.log(data);
+
     if (data.data.success) {
       setSuccessMsg(data.data.success);
       Swal.fire({

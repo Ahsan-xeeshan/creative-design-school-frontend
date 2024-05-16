@@ -131,6 +131,7 @@ const SelectClass = () => {
                   <td className="border">
                     <Link
                       to={`/dashboard/payment/${item._id}`}
+                      state={{ from: item }}
                       className="mr-2 px-4 py-2 bg-yellow-300 rounded-lg uppercase transition duration-300 hover:bg-yellow-400"
                     >
                       pay one
