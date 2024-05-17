@@ -8,7 +8,8 @@ const stripePromise = loadStripe(
   "pk_test_51PFi5QAivobkXwZsYe6VK8yBo6tkYT8AJFicXnmnCMlhB5ETMFxKqAdWVXFAZxRvjUgkvMHZ811qLzInEnXTCLXC00bJR4rSE1"
 );
 
-const Payment = () => {
+const Payment = (e) => {
+  e.preventDefault();
   const location = useLocation();
   const { from } = location.state;
   const { _id, price } = from;

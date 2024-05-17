@@ -126,12 +126,16 @@ const ClassCard = () => {
                     {item.email}
                   </span>
                 </div>
-                <div className="p-4  bg-purple-200 flex border-t items-center justify-between">
-                  <p>
-                    <span className="font-bold text-2xl">Admin feedback :</span>{" "}
-                    <span className="text-xl"> {item.feedback}</span>
-                  </p>
-                </div>
+                {item.feedback && (
+                  <div className="p-4  bg-purple-200 flex border-t items-center justify-between">
+                    <p>
+                      <span className="font-bold text-2xl">
+                        Admin feedback :
+                      </span>{" "}
+                      <span className="text-xl"> {item.feedback}</span>
+                    </p>
+                  </div>
+                )}
                 {(data !== null && data.role === "instructor") ||
                 (data !== null && data.role === "admin") ? (
                   <div className="hidden"></div>
