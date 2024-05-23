@@ -1,8 +1,8 @@
+import { loadStripe } from "@stripe/stripe-js";
 import axios from "axios";
 import { useEffect, useState } from "react";
 import { MdDelete } from "react-icons/md";
 import { useSelector } from "react-redux";
-import { Link } from "react-router-dom";
 import Swal from "sweetalert2";
 
 const SelectClass = () => {
@@ -10,6 +10,13 @@ const SelectClass = () => {
   const buyerId = data.id;
   const [selectedClassData, setSelectedClassData] = useState([]);
   const [totalPrice, setTotalPrice] = useState(0);
+  let stripePromise;
+  const getStripe = () => {
+    if (!stripePromise) {
+      stripePromise = loadStripe(import.meta.env.VITE_STRIPE_PUBLISHABLE_KEY);
+    }
+    return stripePromise;
+  };
 
   useEffect(() => {
     const fetchSelectedClasses = async () => {
@@ -40,6 +47,20 @@ const SelectClass = () => {
     };
     calculateTotalPrice();
   }, [selectedClassData]);
+
+  const handleCheckout = async (item) => {
+    console.log(item);
+    const stripe = await getStripe();
+    const response = await axios.post(
+      "https://creative-school-design.onrender.com/api/v1/payment/confirmpayment",
+      {
+        item,
+      }
+    );
+    if (response.statusCode === 500) return;
+    const data = await response.json();
+    stripe.redirectToCheckout({ sessionId: data.id });
+  };
 
   const handleDelete = async (id) => {
     const confirmed = await Swal.fire({
@@ -129,13 +150,12 @@ const SelectClass = () => {
                     </div>
                   </td>
                   <td className="border">
-                    <Link
-                      to={`/dashboard/payment/${item._id}`}
-                      state={{ from: item }}
+                    <button
+                      onClick={() => handleCheckout(item)}
                       className="mr-2 px-4 py-2 bg-yellow-300 rounded-lg uppercase transition duration-300 hover:bg-yellow-400"
                     >
                       pay one
-                    </Link>
+                    </button>
                   </td>
                 </tr>
               ))}
